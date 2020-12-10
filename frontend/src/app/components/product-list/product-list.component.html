@@ -1,0 +1,48 @@
+<p>filtro category!</p>
+<div class="col-lg-4">
+  <label for="">Category)</label>
+
+  <select name="miselect" [(ngModel)]="filter">
+  
+      <option value={{pro.productCategoryId}}   *ngFor="let pro of productCategoryList">{{pro.description}}</option>
+      <option value="prueba">prueba entro</option>
+ 
+  </select>
+  {{filter}}
+</div>
+
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">Category</th>
+      <th scope="col">Actions</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    
+    <tr *ngFor="let product of productList">
+        
+        <td>{{ product.productId }}</td>
+        
+        <td>{{ product.name }}</td>
+        <td>
+              <div *ngFor="let category of productCategoryList">
+              
+                  <div  *ngIf="category.productCategoryId==product.productCategoryId ">
+
+                    {{ category.description }}
+            
+                  </div>
+              </div>
+        </td>
+          
+        <td><button type="button"  [routerLink]="['/product/', product.productId ]" class="btn btn-success">detalles</button>
+        <button type="button"  (click)="delete(product.productId)" class="btn btn-success">delete</button></td>
+          
+    </tr>    
+  </tbody>
+</table>

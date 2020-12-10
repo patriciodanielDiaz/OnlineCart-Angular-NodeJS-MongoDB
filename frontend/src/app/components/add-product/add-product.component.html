@@ -1,0 +1,74 @@
+<main class="py-5">
+    <section class="mb-5">
+         <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+            <div class="container">
+                <h3 class="mb-3">Add Product</h3>
+                <div class="bg-light p-4">
+                    <div class="row">                                                                         
+                        <div class="col-lg-4">
+                            <label for="">Category(NUESTRA NOMBRES Y MANDA ID)</label>
+
+                            <select >
+  
+                                <option value={{pro.productCategoryId}}   *ngFor="let pro of productCategoryList">{{pro.description}}</option>
+                           
+                            </select>
+                            
+                        </div>
+
+                        <div class="col-lg-4">
+                            <label for="">Name</label>
+                            <input type="text" name="name" formControlName="name" class="form-control form-control-ml"  value="">
+                        </div>
+
+                        <div class="col-lg-4">
+                            <label for="">description</label>
+                            <input type="text" name="description" formControlName="description" class="form-control form-control-ml"  value="">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <label for="">price</label>
+                            <input type="text" name="price" formControlName="price" class="form-control form-control-ml"  value="">
+                        </div>
+
+                    </div> 
+                    {{ message }}
+                    <hr class="mb-4">
+                    <button type="submit" class="btn btn-primary" [disabled]="!productForm.valid">Add</button>                    
+                </div>
+                <div class="row" *ngIf="!name.valid && (name.dirty || name.touched)">
+                    <div class="col-lg-12">
+                        <div class="alert alert-danger" role="alert" *ngIf="name.errors.required">
+                            Name is required
+                        </div>
+                        <div class="alert alert-danger" role="alert" *ngIf="name.errors.lettersOnly">
+                            Name must contain letters only
+                        </div> 
+                    </div>
+                </div>
+                <div class="row" *ngIf="!description.valid && (description.dirty || description.touched)">
+                    <div class="col-lg-12">
+                        <div class="alert alert-danger" role="alert" *ngIf="description.errors.required">
+                            description is required
+                        </div>
+                        <div class="alert alert-danger" role="alert" *ngIf="description.errors.lettersOnly">
+                            description must contain letters only
+                        </div> 
+                    </div>
+                </div>
+                <div class="row" *ngIf="!price.valid && (price.dirty || price.touched)">
+                    <div class="col-lg-12">
+                        <div class="alert alert-danger" role="alert" *ngIf="price.errors.required">
+                            price is required
+                        </div>
+                        <div class="alert alert-danger" role="alert" *ngIf="price.errors.numbersOnly">
+                            Price must contain numbers only
+                        </div> 
+                    </div>
+                </div>
+            </div>
+         </form>
+    </section>
+</main>

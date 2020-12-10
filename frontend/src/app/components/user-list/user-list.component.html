@@ -1,0 +1,29 @@
+<p>product-list works!</p>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Name</th>
+      <th scope="col">email</th>
+
+    </tr>
+  </thead>
+  <tbody>
+    <tr >
+      <tr *ngFor="let user of userList">
+        <td>{{ user.userId }}</td>
+        <td>{{ user.name }}</td>
+        <td>{{ user.email }}</td>
+          <div *ngFor="let type of userTypeList">
+          
+              <td  *ngIf="type.userTypeId==user.userTypeId ">
+
+                {{ type.type }}
+        
+              </td>
+          </div> 
+          
+            <td><button type="button"  [routerLink]="['/user/', user.userId ]" class="btn btn-success">detalles</button></td>
+      </tr>    
+  </tbody>
+</table>

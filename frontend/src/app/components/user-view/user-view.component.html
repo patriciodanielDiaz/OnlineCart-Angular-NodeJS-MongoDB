@@ -1,0 +1,33 @@
+<main class="py-5">
+    <section class="mb-5">
+      <div class="container">
+          <h3 class="mb-3">View user - {{ user.userId }}</h3>
+          <div class="bg-light p-4">
+              <div class="row">
+                  <div class="col-lg-4">
+                      <label for="">Name</label>
+                      {{ user.name }}
+                  </div>                         
+                  
+                  <div class="col-lg-4">
+                      <label for="">type</label>
+                     
+                  </div>
+
+              </div>
+
+              <div class="row">
+                  <div class="col-lg-4">
+                      <label for="">Email</label>
+                      {{ user.email }}
+                  </div>
+
+                  <div class="col-lg-8">
+                      <label for="">password</label>
+                      {{ user.password }}
+                  </div>
+              </div>               
+          </div>
+      </div>
+    </section>
+</main>
