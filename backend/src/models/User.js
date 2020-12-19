@@ -14,24 +14,22 @@ var UserSchema = Schema({
     dni:  {
         type : Number,
         required : true,
-        trim: true,
-        unique: true,
+        trim: true
     },
     email:  {
         type : String,
         required : true,
         trim: true,
         lowercase: true,
-        unique: true,
-        validate: [ (email)=>{var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        return re.test(email)}, 'Please fill a valid email address'],
+        validate: [ (email)=>{
+            var re = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+            return re.test(email)}, 'Please fill a valid email address'],
 
     },
     username:  {
         type : String,
         required : true,
-        trim: true,
-        unique: true,
+        trim: true
     },
     password:  {
         type : String,
@@ -51,7 +49,7 @@ var UserSchema = Schema({
         required : true,
     },
     telephone: {
-        type: Number,
+        type: String,
         required : true, 
     },
     age: {
@@ -60,6 +58,7 @@ var UserSchema = Schema({
     },
     userType: [{ type: Schema.ObjectId, ref: 'UserType'}],
     versionKey: false,
-    },{timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }});
+    },
+    { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }});
 
 module.exports = mongoose.model('User', UserSchema);

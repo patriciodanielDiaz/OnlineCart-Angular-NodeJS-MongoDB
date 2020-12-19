@@ -4,7 +4,6 @@ var ProductCategory = require('./ProductCategory');
 var Schema = mongoose.Schema;
 
 var ProductSchema = Schema({
-    category: String,
     name: String,
     description: String,
     price: Number,
@@ -13,8 +12,7 @@ var ProductSchema = Schema({
     productCategory: {type:Schema.ObjectId, ref: 'ProductCategory'},
     user: { type: Schema.ObjectId, ref: 'User'},
     versionKey: false,
-    timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
-       
-});
+    },
+    { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }});
 
 module.exports = mongoose.model('Product', ProductSchema);
