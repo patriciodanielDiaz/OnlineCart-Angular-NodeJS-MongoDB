@@ -5,32 +5,23 @@ var Schema =mongoose.Schema;
 
 var OrderSchema = Schema({
     user: [{ type: Schema.ObjectId, ref: 'User'}],
-    cart :[
-            [    
-                {
-                    addedProduct:{ 
-                        type: Schema.ObjectId, ref: 'Product'
-             
-                    }
-                },
-                {
-                    amount:{
-                        type : Number,
-                        required : true,
-                    }
-                },
-                {
-                    priceTotal: {
-                        type: Number,
-                        required : true,
-                    }
-                }
-            ]
-        ],
-    total:{
-        type:Number,
-        required : true,
-    }
+    cart :{
+            items: [    {  
+                        
+                            item:{ 
+                                type: Schema.ObjectId, ref: 'Product'
+                    
+                            }
+                        ,
+                        
+                            qty:{
+                                type : Number,
+                                required : true,
+                            }
+                        }
+                    ],
+             totalPrice: Number
+            },
     
 },{timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }});
 
