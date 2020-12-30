@@ -1,6 +1,7 @@
 var mongoose =  require('mongoose');
 var Schema = mongoose.Schema;
 var UserType = require('./UserType');
+var bcrypt = require('bcryptjs');
 
 var UserSchema = Schema({
     name: {
@@ -59,6 +60,16 @@ var UserSchema = Schema({
     userType: [{ type: Schema.ObjectId, ref: 'UserType'}],
     versionKey: false,
     },
-    { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }});
+    { timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' },
+        versionKey: false}
+);
+
+UserSchema.statics.encryptPassword = async(password)=>{
+    const salt = await bcrypt.genSalt(10);
+    return await bcrypt.hash(password,salt);
+}
+UserSchema.statics.comparePassword = async(password,receivedPassword)=>{
+    return await bcrypt.compare(password.receivedPassword);
+}
 
 module.exports = mongoose.model('User', UserSchema);

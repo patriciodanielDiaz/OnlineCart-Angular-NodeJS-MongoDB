@@ -9,7 +9,7 @@ var UserTypeSchema = Schema({
          trim: true   //borra espacios en blanco
      },
      versionKey: false,
-     users :[{ type: Schema.ObjectId, ref: 'User'}],
+     //users :[{ type: Schema.ObjectId, ref: 'User'}],
     },{timestamps: { createdAt: 'created_at', updatedAt: 'updated_at' }});
 
 module.exports = mongoose.model('UserType', UserTypeSchema);

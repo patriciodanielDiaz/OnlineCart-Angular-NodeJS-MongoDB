@@ -1,8 +1,11 @@
-const user= require ('../models/User');
+const User= require ('../models/User');
+const UserType = require('../models/UserType');
+const jwt = require('jsonwebtoken');
+const conf = require('../config/tokenSecret');
 
 async function getAll (req, res) {
 
-    const users = await user.find({},);
+    const users = await User.find({},);
     res.status(200).json(users);
    
 };
@@ -33,7 +36,7 @@ async function create (req, res) {
 
 async function getById(req, res) {
 
-    const newuser = await user.findById(req.params.userId)
+    const newuser = await User.findById(req.params.userId)
             .populate({
                 path: "userType"
             })
@@ -43,7 +46,7 @@ async function getById(req, res) {
 
 async function updateUser(req, res){
 
-    const updateuser = await user.findOneAndUpdate(req.params.userId, req.body, {
+    const updateuser = await User.findOneAndUpdate(req.params.userId, req.body, {
         new: true  //me da el objeto actualizado sino el viejo
     });
 
@@ -52,8 +55,49 @@ async function updateUser(req, res){
 };
 
 async function deleteUser(req, res){
-    await user.findByIdAndDelete(req.params.userId);
+    await User.findByIdAndDelete(req.params.userId);
     res.status(200).json();
+};
+
+async function signUp(req, res){
+    
+    //var logUser =await User.find
+    const {name,lastname,dni,email,username,password,city,postalcode,address,telephone,age,userType}=req.body;
+
+    var newUser= new User({
+        name :name,
+        lastname:lastname,
+        dni:dni,
+        email:email,
+        username:username,
+        password:await User.encryptPassword(password),
+        city:city,
+        postalcode:postalcode,
+        address:address,
+        telephone:telephone,
+        age:age
+    });
+
+    if(userType){
+        const found= await UserType.find({userType:{$in:userType}});
+        newUser.userType = found.map(UserType => UserType._id);
+    }else{
+        const type = await UserType.findOne({userType:"cliente"});
+        newUser.userType = [type._id];
+    }
+    
+    var saveUser = await newUser.save();
+    
+    const token = jwt.sign({id:saveUser._id},conf.SECRET,{
+        expiresIn: 86400 //24hours
+    })
+
+    res.status(201).json({token});
+};
+
+async function signIn(req, res){
+   
+
 };
 
 module.exports =  {
@@ -61,5 +105,7 @@ module.exports =  {
     create,
     getById,
     updateUser,
-    deleteUser
+    deleteUser,
+    signIn,
+    signUp
 };

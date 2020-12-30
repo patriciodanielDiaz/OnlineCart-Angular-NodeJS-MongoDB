@@ -8,8 +8,4 @@ router.get('/:userId',userController.getById);
 router.put('/:userId',userController.updateUser);
 router.delete('/:userId',userController.deleteUser);
 
-router.get('/signin',userController.getAll);
-router.get('/signup',userController.getAll);
-router.get('/logout',userController.getAll);
-
 module.exports = router;
