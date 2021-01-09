@@ -82,7 +82,7 @@ async function signUp(req, res){
         const found= await UserType.find({userType:{$in:userType}});
         newUser.userType = found.map(UserType => UserType._id);
     }else{
-        const type = await UserType.findOne({userType:"cliente"});
+        const type = await UserType.findOne({userType:"client"});
         newUser.userType = [type._id];
     }
     
@@ -97,7 +97,45 @@ async function signUp(req, res){
 
 async function signIn(req, res){
    
+    const userFound = await User.findOne({email:req.body.email}).populate("userType");
+    
+    if(!userFound) return res.status(400).json({message: "User not found"});
 
+    const matchpass = await User.comparePassword(req.body.password , userFound.password);
+
+    if(!matchpass) return res.status(401).json({token: null, message: "Invalid password"});
+
+    const token = jwt.sign({id:userFound._id},conf.SECRET,{
+        expiresIn: 1800 //meida hora
+    });
+    
+    res.json({token});
+
+};
+
+async function getProfile(req, res) {
+
+    const user = await User.findById(req.id);
+    if(!user) return res.status(400).json({message: "User not found"});
+    res.status(200).json(user);
+   
+};
+
+async function updateUserLogin(req, res) {
+
+    const {password}=req.body;
+
+    const user = await User.findById(req.id);
+    if(!user) return res.status(400).json({message: "User not found"});
+
+    user.password = await User.encryptPassword(password);
+    
+    const updateuser = await User.findOneAndUpdate(user._Id, req.body, {
+        new: true  //me da el objeto actualizado sino el viejo
+    });
+
+    res.status(200).json(updateuser);
+   
 };
 
 module.exports =  {
@@ -106,6 +144,8 @@ module.exports =  {
     getById,
     updateUser,
     deleteUser,
+    getProfile,
+    updateUserLogin,
     signIn,
     signUp
 };

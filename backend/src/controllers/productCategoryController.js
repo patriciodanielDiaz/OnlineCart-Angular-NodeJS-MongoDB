@@ -1,5 +1,5 @@
 
-const   ProductCategory= require('../models/ProductCategory');
+const ProductCategory= require('../models/ProductCategory');
 
 async function getAll(req, res) {
 

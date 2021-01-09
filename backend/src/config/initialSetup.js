@@ -8,8 +8,8 @@ async function createRoles(){
         if(count > 0) return;
 
         const values = await Promise.all([
-            new UserType({userType:'administrador'}).save(),
-            new UserType({userType:'cliente'}).save(),
+            new UserType({userType:'administrator'}).save(),
+            new UserType({userType:'client'}).save(),
         ]);
         //console.log(values);
     

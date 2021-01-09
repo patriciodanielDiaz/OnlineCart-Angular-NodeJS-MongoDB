@@ -7,7 +7,7 @@ async function getAll(req, res){
 async function createPro(req, res){
     const newProduct = new Product({
         
-        name:  req.body.lastname,
+        name:  req.body.name,
         description:  req.body.description,
         price:  req.body.price,
         image:  req.body.image,
@@ -21,6 +21,7 @@ async function createPro(req, res){
     res.status(201).json(productSave);
 }
 async function updatePro(req, res){
+    
     const updateproduct = await Product.findOneAndUpdate(req.params.productId, req.body, {
         new: true  //me da el objeto actualizado sino el viejo
     });
